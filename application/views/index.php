@@ -3,13 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>e_shop</title>
-    <style>
-        #eshop-header{
-            width: 100%;
-            height: 400px;
-            background: #00CC00;
-        }
-    </style>
+    <base href="<?php site_url()?>">
+    <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
     <header id="eshop-header">
@@ -18,8 +13,13 @@
                 <div class="login-access">LOGIN</div>
                 <div class="eshop-logo">NEW FASHION</div>
                 <div class="my-cart">
-                    <div class="cart-info"></div>
-                    <div class="clear-cary"><a href="#">empty cart</a></div>
+                    <div class="cart-info">
+                        Cart:
+                        <span class="price">1.00</span>
+                        <span class="cart-item">(0 items)</span>
+                        <img class="cart-logo" src="images/cart.png" alt="">
+                    </div>
+                    <div class="clear-cart"><a href="#">empty cart</a></div>
                 </div>
             </div>
             <ul class="nav">

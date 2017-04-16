@@ -1,0 +1,74 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+#eshop-header{
+    width: 100%;
+    height: 400px;
+    background: url("../images/banner33.jpg");
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+#eshop-header .wrapper{
+    width:90%;
+    margin: 0 auto;
+}
+#eshop-header .wrapper .top-show{
+    height: 100px;
+    width: 100%;
+    position: relative;
+}
+#eshop-header .wrapper .top-show .login-access{
+    width: 60px;
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 500;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top:50%;
+    margin-top: -10px;
+}
+#eshop-header .wrapper .top-show .eshop-logo{
+    font-size: 40px;
+    font-weight: 600;
+    color: #ffffff;
+    float: left;
+    width: 300px;
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    margin-left: -150px;
+    top:50%;
+    height: 50px;
+    margin-top: -25px;
+}
+#eshop-header .wrapper .top-show .my-cart{
+    position: absolute;
+    right:0;
+    top:0;
+    height: 100%;
+}
+#eshop-header .wrapper .top-show .my-cart .cart-info{
+    margin-top: 30px;
+    width: 180px;
+    padding: 10px 30px;
+    background: rgba(55, 55, 55, 1);
+    text-align: center;
+    color: #ffffff;
+    overflow: hidden;
+}
+#eshop-header .wrapper .top-show .my-cart .cart-info .cart-logo{
+    vertical-align: middle;
+}
+#eshop-header .wrapper .top-show .my-cart .clear-cart{
+    width: 100%;
+    text-align: center;
+}
+#eshop-header .wrapper .top-show .my-cart .clear-cart a{
+    color: #ffffff;
+    text-decoration: none;
+}
