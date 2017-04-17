@@ -5,143 +5,7 @@
     <title>e_shop</title>
     <base href="<?php site_url()?>">
     <link rel="stylesheet" href="css/common.css">
-    <style>
-        #eshop-container{
-            width: 100%;
-        }
-        #eshop-container .wrapper{
-            width: 90%;
-            margin: 0 auto;
-        }
-        #eshop-container .wrapper .show-category{
-            padding:0;
-            margin: 30px 0 0;
-            width: 100%;
-            list-style: none;
-            overflow: hidden;
-        }
-        #eshop-container .wrapper .show-category li{
-            position: relative;
-            float: left;
-            height: 210px;
-            width: 360px;
-            margin: 10px;
-        }
-        #eshop-container .wrapper .show-category li img{
-            position: absolute;
-            height: 100%;
-            width: 100%;
-        }
-        #eshop-container .wrapper .show-category li .category-title{
-            /*width: 30%;*/
-            position: absolute;
-            right: 10px;
-            bottom: 0;
-            color: #ffffff;
-        }
-        #eshop-container .wrapper .show-category li .category-title span{
-            clear: both;
-            float: right;
-            font-size: 15px;
-            text-align: right;
-        }
-        #eshop-container .wrapper .show-category li .category-title span.bigger{
-            font-size: 35px;
-        }
-        #eshop-container .wrapper .goods-box{
-            overflow: hidden;
-            margin-top: 30px;
-            width: 100%;
-        }
-        #eshop-container .wrapper .goods-box .category-panel{
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            float: right;
-        }
-        #eshop-container .wrapper .goods-box .category-panel li{
-            width: 100px;
-            height: 30px;
-            float: left;
-            margin: 0 5px;
-            background: #fa558f;
-            text-align: center;
-            line-height: 30px;
-            font-size: 15px;
-            padding: 0 20px;
-            color: #ffffff;
-        }
-        #eshop-container .wrapper .goods-box .category-panel li.active{
-            background: #3C3B3B;
-        }
-        #eshop-container .wrapper .goods-box .good-container{
-            margin-top: 60px;
-            width: 100%;
-            clear: both;
-            list-style: none;
-        }
-        #eshop-container .wrapper .goods-box .good-container li{
-            border: 1px solid #ccc;
-            padding-bottom: 30px;
-            width: 340px;
-            background: #eee;
-            position: relative;
-        }
-        #eshop-container .wrapper .goods-box .good-container li .is-new{
-            width: 60px;
-            height: 30px;
-            position: absolute;
-            right: 0;
-            top:0;
-            text-align: center;
-            line-height: 30px;
-            background: #fa558f;
-            color: #fff;
-        }
-        #eshop-container .wrapper .goods-box .good-container li .good-msg{
-            width: 90%;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-        #eshop-container .wrapper .goods-box .good-container li  .good-img{
-            width: 100%;
-        }
-        #eshop-container .wrapper .goods-box .good-container li .good-msg .good-title{
-            width: 100%;
-            font-size: 20px;
-            font-weight: 400;
-            margin: 0;
-            padding:0;
-        }
-        #eshop-container .wrapper .goods-box .good-container li .good-msg .good-price{
-            width: 100%;
-            font-size: 25px;
-            font-weight: 500;
-            margin: 0;
-            padding:0;
-        }
-        #eshop-container .wrapper .goods-box .good-container li .good-msg .good-amount{
-            width: 150px;
-            height: 30px;
-            float: left;
-            border: 1px solid #aaaaaa;
-        }
-        #eshop-container .wrapper .goods-box .good-container li .good-msg .good-add{
-            clear: left;
-            float: left;
-            width: 60px;
-            height: 40px;
-            text-align: center;
-            line-height: 20px;
-            margin-top: 10px;
-            background: #ef8743;
-            border-radius: 5px;
-            border: none;
-            color: #ffffff;
-            font-size: 15px;
-            font-weight: 500;
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <header id="eshop-header">
@@ -268,5 +132,59 @@
         </div>
     </div>
 </div>
+<script src="js/jquery-3.0.0.min.js"></script>
+<script>
+    $(function () {
+        function Good() {
+            this.dataSrc = '';
+            this.vernier = 0;
+            this.goodList = [];
+            this.num = 3;
+            this.getData = function () {
+                $.get(this.dataSrc,{vernier:this.vernier,num:this.num},function (data) {
+                    data = JSON.parse(data);
+                    console.log(data);
+                    this.add(data);
+                }.bind(this));
+            };
+            this.add = function (arr) {//用于将项数组中添加数据
+                for(var i=0;i<arr.length;i++){
+                    this.goodList.push(this.create(arr[i]));
+                }
+                this.render();
+            };
+            this.render = function () {//用于向页面渲染dom
+                var $goodList = $('.good-container');
+                for(var i =0;i<this.goodList.length;i++){
+                    this.goodList[i].appendTo($goodList);
+                }
+            };
+            this.create = function (obj) {//用于创建一组dom结构
+                var $li = $('<li></li>');
+                if(obj.is_new === '1'){//判断是否为最新的
+                    $('<div class="is-new">New</div>').appendTo($li);
+                    console.log('aa');
+                }
+                $("<img src='"+obj.img_src+"' class='good-img'>").appendTo($li);
+                var $goodMsg = $("<div class='good-msg'></div>");
+                $("<h3 class='good-title'>"+obj.prod_name+"</h3>").appendTo($goodMsg);
+                $("<p class='good-price'>"+obj.prod_price+"</p>").appendTo($goodMsg);
+                $("<input type='text' class='good-amount' value='1'>").appendTo($goodMsg);
+                $("<button class='good-add'>ADD</button>").on('click',function () {
+                    console.log(obj);
+                }).appendTo($goodMsg);
+                $goodMsg.appendTo($li);
+                return $li;
+            };
+            this.init = function (src) {
+                this.dataSrc = src;
+                this.getData();
+            }
+        }
+        var good = new Good();
+        good.init('good/get_goods');
+
+    })
+</script>
 </body>
 </html>
