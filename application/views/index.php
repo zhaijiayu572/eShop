@@ -130,6 +130,7 @@
                </li>
             </ul>
         </div>
+        <div class="load-btn">加载更多</div>
     </div>
 </div>
 <script src="js/jquery-3.0.0.min.js"></script>
@@ -137,13 +138,13 @@
     $(function () {
         function Good() {
             this.dataSrc = '';
-            this.vernier = 0;
+            this.vernier = 0;        //数据库游标的位置
             this.goodList = [];
-            this.num = 3;
+            this.num = 3;           //每次加载的数量
             this.getData = function () {
                 $.get(this.dataSrc,{vernier:this.vernier,num:this.num},function (data) {
                     data = JSON.parse(data);
-                    console.log(data);
+                    this.vernier += this.num;
                     this.add(data);
                 }.bind(this));
             };
@@ -155,6 +156,7 @@
             };
             this.render = function () {//用于向页面渲染dom
                 var $goodList = $('.good-container');
+                $goodList.empty();
                 for(var i =0;i<this.goodList.length;i++){
                     this.goodList[i].appendTo($goodList);
                 }
@@ -179,7 +181,8 @@
             this.init = function (src) {
                 this.dataSrc = src;
                 this.getData();
-            }
+            };
+            this.loadMore = this.getData;
         }
         var good = new Good();
         good.init('good/get_goods');
