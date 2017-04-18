@@ -136,6 +136,7 @@
     color: #ffffff;
     font-size: 15px;
     font-weight: 500;
+    outline: none;
 }
 #eshop-container .wrapper .load-btn{
     width: 300px;
