@@ -142,11 +142,12 @@
             this.vernier = 0;        //数据库游标的位置
             this.goodList = [];
             this.num = 3;           //每次加载的数量
-            this.getData = function () {
+            this.getData = function (callback) {
                 $.get(this.dataSrc,{vernier:this.vernier,num:this.num},function (data) {
                     data = JSON.parse(data);
                     this.vernier += this.num;
                     this.add(data);
+                    callback&&callback();
                 }.bind(this));
             };
             this.add = function (arr) {//用于将项数组中添加数据
@@ -165,7 +166,7 @@
             this.create = function (obj) {//用于创建一组dom结构
                 var $li = $('<li></li>');
                 if(obj.is_new === '1'){//判断是否为最新的
-                    $('<div class="is-new">New</div>').appendTo($li);;
+                    $('<div class="is-new">New</div>').appendTo($li);
                 }
                 $("<img src='"+obj.img_src+"' class='good-img'>").appendTo($li);
                 var $goodMsg = $("<div class='good-msg'></div>");
@@ -183,7 +184,17 @@
                 this.dataSrc = src;
                 this.getData();
             };
-            this.loadMore = this.getData;
+            this.loadMore = function () {
+                var isGet = false;
+                if(!isGet){
+                    isGet = true;
+                    this.getData(function () {
+                        isGet = false;
+                    });
+                }else{
+                    return false;
+                }
+            };
         }
         var good = new Good();
         good.init('good/get_goods');
@@ -197,7 +208,7 @@
                 this.getMyCart(function (data) {
                     for(var i=0;i<data.length;i++){
                         this.amount += parseInt(data[i].amount);
-                        this.price = data[i].amount*data[i].prod_price;
+                        this.price += data[i].amount*data[i].prod_price;
                         this.goodList.push(data[i]);
                     }
                     this.render();
@@ -263,7 +274,9 @@
                 this.init();      //数据的初始化
             }
         };
+        //购物车的初始化
         cart.init();
+        $(".load-btn").on('click',good.loadMore);
     })
 </script>
 </body>

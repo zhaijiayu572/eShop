@@ -8,7 +8,9 @@ class Good extends CI_Controller
         $this->load->model('good_model');
     }
     public function get_goods(){
-        $rs = $this->good_model->get_goods(1,0);
+        $index = $this->input->get('vernier');
+        $num = $this->input->get('num');
+        $rs = $this->good_model->get_goods($num,$index);
         echo json_encode($rs);
     }
 }
