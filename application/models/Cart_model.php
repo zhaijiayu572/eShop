@@ -16,4 +16,7 @@ class Cart_model extends CI_Model
         return $this->db->select('*')->from('t_cart')->join('t_product','t_cart.prod_id=t_product.prod_id')
             ->where('user_id',$uid)->get()->result();
     }
+    public function empty_cart($uid){
+        return $this->db->where('user_id',$uid)->delete('t_cart');
+    }
 }

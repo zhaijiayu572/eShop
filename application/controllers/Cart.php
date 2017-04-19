@@ -34,4 +34,13 @@ class Cart extends CI_Controller
         $rs = $this->cart_model->get_my_cart($uid);
         echo json_encode($rs);
     }
+    public function empty_cart(){
+        $uid = 1;//$this->session->uid;
+        $rs = $this->cart_model->empty_cart($uid);
+        if($rs){
+            echo "success";
+        }else{
+            echo 'fail';
+        }
+    }
 }
