@@ -14,8 +14,8 @@ $(function () {
                     isEnd = true;
                 }
                 this.vernier += this.num;
-                this.add(data);
                 callback&&callback(isEnd);
+                this.add(data);
             }.bind(this));
         };
         this.add = function (arr) {//用于将项数组中添加数据
@@ -30,8 +30,7 @@ $(function () {
             for(var i =0;i<this.goodList.length;i++){
                 this.goodList[i].appendTo($goodList);
             }
-            console.log();
-            if(this.loadMoreBtn!==null && $('.load-btn')[0] === undefined){      //判断是否需要渲染
+            if(this.loadMoreBtn!==null && $('.load-btn')[0] === undefined){//判断是否需要渲染
                 this.loadMoreBtn.appendTo($('#eshop-container .wrapper'));
             }
 
@@ -67,10 +66,10 @@ $(function () {
                 isGet = true;
                 this.getData(function (isEnd) {
                     if(isEnd) {
-                        this.loadMoreBtn.remove();
+                        this.loadMoreBtn.hide();
                     }
                     isGet = false;
-                });
+                }.bind(this));
             }else{
                 return false;
             }
@@ -174,4 +173,8 @@ $(function () {
     cart.init();
     $(".load-btn").on('click',good.loadMore);
     $('.my-cart .clear-cart').on('click',cart.empty);
+
+
+
+
 });
