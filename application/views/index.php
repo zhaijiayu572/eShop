@@ -25,8 +25,8 @@
             </div>
             <ul class="nav">
                 <li class="active">HOME</li>
-                <li>WOMEN</li>
-                <li>MEN</li>
+                <li value="2">WOMEN</li>
+                <li value="1">MEN</li>
                 <li>ABOUT US</li>
                 <li>BLOG</li>
                 <li>SHOP ONLINE</li>

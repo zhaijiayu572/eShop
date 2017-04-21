@@ -6,8 +6,10 @@ $(function () {
         this.goodList = [];
         this.num = 3;           //每次加载的数量
         this.loadMoreBtn = null;
-        this.getData = function (callback) {
-            $.get(this.dataSrc,{vernier:this.vernier,num:this.num},function (data) {
+        this.getData = function (option,callback) {
+            var defVal = {vernier:this.vernier,num:this.num};
+            $.extend(defVal,option);
+            $.get(this.dataSrc,defVal,function (data) {
                 var isEnd = false;
                 data = JSON.parse(data);
                 if(data.length<this.num){   //当数据库中没有数据的时候
@@ -52,9 +54,14 @@ $(function () {
             $goodMsg.appendTo($li);
             return $li;
         };
-        this.init = function (src) {
+        this.init = function (src,option) {      //option为要传递的参数
+            this.dataSrc = '';
+            this.vernier = 0;        //数据库游标的位置
+            this.goodList = [];
+            this.num = 3;           //每次加载的数量
+            this.loadMoreBtn = null;
             this.dataSrc = src;
-            this.getData(function (isEnd) {
+            this.getData(option,function (isEnd) {
                 if(!isEnd){
                     this.loadMoreBtn = this.createLoadMore();
                 }                            //判断是否渲染'加载更多'按钮
@@ -174,7 +181,11 @@ $(function () {
     $(".load-btn").on('click',good.loadMore);
     $('.my-cart .clear-cart').on('click',cart.empty);
 
-
+    //加载指定的商品
+    $('.nav li').on('click',function () {
+        var cata = $(this).val();
+        good.init('good/get_good_by_cata',{cata:cata});
+    });
 
 
 });

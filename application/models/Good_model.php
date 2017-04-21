@@ -7,4 +7,10 @@ class Good_model extends CI_Model
            ->where('is_main',1)
             ->limit($num,$index)->get()->result();
     }
+    public function get_good_by_cata($num,$index,$arr){
+
+    }
+    public function get_child_cata(){
+
+    }
 }

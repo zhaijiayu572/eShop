@@ -13,4 +13,7 @@ class Good extends CI_Controller
         $rs = $this->good_model->get_goods($num,$index);
         echo json_encode($rs);
     }
+    public function get_good_by_cata(){
+
+    }
 }
